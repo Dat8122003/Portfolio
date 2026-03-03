@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 
 const Hero = () => {
   const item = [
-    { key: "about", label: "Nhấn để xem Giới thiệu" },
-    { key: "skills", label: "Nhấn để xem Kỹ năng" },
-    { key: "projects", label: "Nhấn để xem Project" },
-    { key: "contact", label: "Nhấn để xem Liên hệ" },
+    { key: "about", label: "Click to view About" },
+    { key: "skills", label: "Click to view Skills" },
+    { key: "projects", label: "Click to view Projects" },
+    { key: "contact", label: "Click to view Contact" },
   ];
   return (
     <>

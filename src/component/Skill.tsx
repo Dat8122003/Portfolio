@@ -41,7 +41,7 @@ const Skill = () => {
   return (
     <div id="skills" className="w-full min-h-screen scroll-mt-20">
       <h2 className="text-4xl inline-block font-bold mb-8 pb-2 bg-gradient-to-r from-black to-red-500 bg-clip-text text-transparent">
-        Kỹ năng
+        Skills
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {skills.map((skill, index) => (

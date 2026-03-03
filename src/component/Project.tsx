@@ -45,7 +45,7 @@ const Project = () => {
       className="min-h-screen mt-16 md:mt-auto flex flex-col items-center justify-center gap-y-6 scroll-mt-6"
     >
       <h2 className="text-4xl font-bold bg-gradient-to-r from-black to-red-500 bg-clip-text text-transparent">
-        Dự án
+        Projects
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start ">
         {projects.map((project, index) => (
@@ -97,7 +97,7 @@ const Project = () => {
               href={project.links.demo}
               className="border-2 mt-2 px-2 py-1 rounded-xl font-bold hover:bg-gray-200 transition-colors block w-full text-center"
             >
-              Nhấn để đến trang demo
+              Click to view demo
             </a>
           </motion.div>
         ))}
