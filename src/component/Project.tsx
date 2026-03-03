@@ -14,7 +14,7 @@ const Project = () => {
         "ReactJS",
         "Spring Boot",
         "WebSockets",
-        "MySQL",
+        "PostgreSQL",
         "Tailwind",
       ],
       links: {
