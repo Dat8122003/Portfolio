@@ -1,22 +1,21 @@
-import "./App.css";
-import About from "./component/About";
-import Footer from "./component/Footer";
-import Navbar from "./component/Header";
+﻿import Header from "./component/Header";
 import Hero from "./component/Hero";
-import Project from "./component/Project";
+import About from "./component/About";
 import Skill from "./component/Skill";
+import Projects from "./component/Projects";
+import Footer from "./component/Footer";
 
-function App() {
-  return (
-    <>
-      <Navbar />
-      <Hero></Hero>
-      <About></About>
-      <Skill></Skill>
-      <Project></Project>
-      <Footer></Footer>
-    </>
-  );
-}
+const App = () => (
+  <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
+    <Header />
+    <main>
+      <Hero />
+      <About />
+      <Skill />
+      <Projects />
+    </main>
+    <Footer />
+  </div>
+);
 
 export default App;

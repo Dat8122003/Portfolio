@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài thí nghiệm online</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.js"></script>
+    <script src="http://www.umediaserver.net/umediaserver/webrtcadapter.js"></script>
+    <script src="http://www.umediaserver.net/umediaserver/unrealwebrtcplayer.js"></script>
+    <link rel="stylesheet" href="http://www.umediaserver.net/umediaserver/unreal_html5_player_styles_v1.css" />
+    <script src="http://www.umediaserver.net/umediaserver/unreal_html5_player_script_v2.js"></script>
+    <style>
+        .data-popup {
+		  display: none;
+		  position: fixed;
+		  top: 50%;
+		  left: 50%;                 /* đẩy hẳn vào giữa màn hình */
+		  transform: translate(-50%, -50%);
+		  background: #fff;
+		  padding: 16px;             /* tăng padding để đỡ chật */
+		  border-radius: 6px;
+		  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+		  z-index: 1000;
+		  width: 480px;              /* tăng rộng 1 chút */
+		  max-height: 320px;         /* tăng cao hơn */
+		  overflow: hidden;
+		  display: flex;
+		  flex-direction: column;
+		  font-size: 16px;           /* font toàn popup */
+		}
+
+        
+        .popup-header {
+            cursor: move;
+            background: #f5f5f5;
+            padding: 8px;
+            margin: -10px -10px 0 -10px;
+            border-radius: 6px 6px 0 0;
+            border-bottom: 1px solid #ddd;
+            user-select: none;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+        }
+        
+        .data-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 5px 0;
+            display: flex;
+            gap: 10px;
+            max-height: 250px;
+        }
+
+        .data-column {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .data-section {
+            background: #f8f9fa;
+            border-radius: 4px;
+            padding: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .data-section h3 {
+            margin: 0 0 8px 0;
+            color: #2c3e50;
+            font-size: 14px;
+            border-bottom: 1px solid #3498db;
+            padding-bottom: 4px;
+		    text-align: center;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            background: #e9ecef;
+            padding: 4px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            position: sticky;
+            top: 0;
+        }
+
+        .data-table td {
+            padding: 4px;
+            border: 1px solid #dee2e6;
+			text-align: center;
+        }
+
+        .data-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #666;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .close-button:hover {
+            color: #000;
+        }
+        
+        .export-button {
+		  margin-top: 12px;
+		  align-self: flex-end;      /* đẩy nút về bên phải */
+		  padding: 8px 14px;         /* thu gọn padding */
+		  background: #2c3e50;       /* màu giống các nút khác */
+		  color: #ffffff;
+		  border: none;
+		  border-radius: 8px;
+		  font-size: 13px;           /* font vừa đủ */
+		  font-weight: 600;
+		  font-family: 'Poppins', Arial, sans-serif;
+		  cursor: pointer;
+		  transition: all 0.3s ease;
+		  width: auto;               /* bỏ full-width */
+		  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.3);
+		  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+		}
+
+        
+        .export-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(44, 62, 80, 0.4);
+        }
+
+        .chart-container {
+            width: 100%;
+            max-width: 250px;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        #line-chart {
+            width: 100% !important;
+            height: 100% !important;
+            display: block;
+        }
+
+        .export-icon-btn { display: none !important; }
+    </style>
+</head>
+<body>
+    <div id="mainContainer" class="container">
+        <h1>Bài thí nghiệm online đo nhiệt độ Curie của chất sắt từ</h1>
+        <div class="main-content">
+            <div class="left-section">
+                <h2 class="camera-title">Camera toàn cảnh</h2>
+                <div class="camera-display" id="cameraDisplay">
+                    <div id="video1"></div>
+                </div>
+            </div>
+            <div class="right-section">
+                <div class="control-panel-left">
+                    <h2 class="control-title">Điều khiển</h2>
+                    <div class="control-buttons-left">
+                        <button id="onoff" class="toggle-button">On/Off</button>
+                        <button id="bep" class="toggle-button">Gia nhiệt</button>
+                        <button id="quat" class="toggle-button">Quạt</button>
+                        <button id="camera" class="toggle-button">Camera</button>
+                        <button id="reconnectButton">Reload</button>
+                        <button id="detailData">Chi tiết</button>
+                        <button id="resetButton" class="control-button">Reset</button>
+                        <button id="logoutButton">Đăng xuất</button>
+                    </div>
+                </div>
+                <div class="data-display">
+                    <h2 class="data-title">Dữ liệu hiện tại</h2>
+                    <p><span class="data-label">I (µA):</span> <span id="currentI">Chưa có</span></p>
+                    <p><span class="data-label">Uc (mV):</span> <span id="currentUc">Chưa có</span></p>
+                </div>
+                <div class="permission-display">
+                    <p><span class="data-label">Quyền điều khiển:</span> <span id="controlPermission">Chưa có</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="chart-section-bottom">
+            <h2>Đồ thị phác thảo</h2>
+            <div class="chart-container-large">
+                <canvas id="line-chart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+    <div id="dataPopup" class="data-popup">
+        <div id="popupHeader" class="popup-header">
+            <span>Chi tiết dữ liệu</span>
+            <button id="closeDataPopup" class="close-button">&times;</button>
+        </div>
+        <div class="data-content">
+            <div class="data-column">
+                <div class="data-section">
+                    <h3>Dữ liệu tăng</h3>
+                    <div id="heaterData"></div>
+                </div>
+            </div>
+            <div class="data-column">
+                <div class="data-section">
+                    <h3>Dữ liệu giảm</h3>
+                    <div id="fanData"></div>
+                </div>
+            </div>
+        </div>
+        <button id="exportData" class="export-button">Xuất dữ liệu CSV</button>
+    </div>
+
+    <!-- Navigation arrows -->
+    <button id="navArrowDown" class="nav-arrow nav-arrow-down" title="Cuộn xuống đồ thị">
+        ↓
+    </button>
+    <button id="navArrowUp" class="nav-arrow nav-arrow-up" title="Cuộn lên camera" style="display: none;">
+        ↑
+    </button>
+
+    <script>
+    // Kiểm tra authentication
+    const username = localStorage.getItem('username');
+    const role = localStorage.getItem('role');
+    if (!username || !role) {
+        window.location.href = '/login.html';
+    }
+
+    // Hiển thị thông tin người dùng
+    const userNameElement = document.getElementById('userName');
+    const userRoleElement = document.getElementById('userRole');
+    if (userNameElement) userNameElement.textContent = username || 'Rỗng';
+    if (userRoleElement) userRoleElement.textContent = role || 'Rỗng';
+    </script>
+    <script type="module" src="/js/config.js"></script>
+    <script type="module" src="js/script.js"></script>
+</body>
+</html>
