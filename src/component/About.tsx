@@ -1,10 +1,10 @@
-﻿import { useTheme } from "../hooks/useTheme";
+import { useTheme } from "../hooks/useTheme";
 import Reveal from "./motion/Reveal";
 import { envUrl } from "../hooks/env";
 
 type Row =
   | { kind: "kv"; k: string; v: string }
-  | { kind: "link"; k: string; href: string; v: string; pending?: boolean };
+  | { kind: "link"; k: string; href: string; v: string; pending?: boolean; download?: boolean };
 
 const About = () => {
   const { t } = useTheme();
@@ -21,6 +21,7 @@ const About = () => {
   const contact: Row[] = [
     { kind: "kv", k: t.contactPhone, v: t.phoneValue },
     { kind: "kv", k: t.contactEmail, v: t.emailValue },
+    { kind: "link", k: t.contactCv, href: "/CV_NgoLeQuangDat.pdf", v: t.cvValue, download: true },
   ];
   contact.push(
     githubHref
@@ -52,8 +53,9 @@ const About = () => {
             {r.kind === "link" ? (
               <a
                 href={r.href}
-                target={r.pending ? undefined : "_blank"}
+                target={r.pending || r.download ? undefined : "_blank"}
                 rel="noreferrer"
+                download={r.download || undefined}
                 aria-disabled={r.pending || undefined}
                 className={
                   "break-all text-sm font-semibold underline-offset-4 sm:text-base " +
@@ -65,7 +67,7 @@ const About = () => {
                   if (r.pending) e.preventDefault();
                 }}
               >
-                {r.v}
+                {r.v}{r.download ? <span aria-hidden> ?</span> : null}
               </a>
             ) : (
               <span className="text-sm font-semibold text-zinc-900 sm:text-base dark:text-zinc-50">

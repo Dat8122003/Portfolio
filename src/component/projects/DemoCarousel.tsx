@@ -1,4 +1,4 @@
-﻿import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type Props = {
@@ -39,7 +39,7 @@ const DemoCarousel = ({ images, alt }: Props) => {
 
   return (
     <div
-      className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl border hairline bg-zinc-50 dark:bg-zinc-900"
+      className="group relative aspect-[16/10] w-full overflow-hidden rounded-xl border hairline bg-zinc-50 dark:bg-zinc-900"
       onMouseEnter={(e) => e.currentTarget.querySelectorAll<HTMLButtonElement>("button[data-arrow]").forEach((b) => (b.style.opacity = "1"))}
       onMouseLeave={(e) => e.currentTarget.querySelectorAll<HTMLButtonElement>("button[data-arrow]").forEach((b) => (b.style.opacity = ""))}
     >
@@ -68,7 +68,7 @@ const DemoCarousel = ({ images, alt }: Props) => {
             onClick={prev}
             className="btn-magnetic absolute left-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full border hairline bg-white/85 text-zinc-900 opacity-0 backdrop-blur transition-opacity hover:bg-zinc-900 hover:text-white sm:left-3 dark:bg-zinc-950/80 dark:text-zinc-50 dark:hover:bg-zinc-50 dark:hover:text-zinc-900"
           >
-            <span aria-hidden className="text-base leading-none">‹</span>
+            <span aria-hidden className="text-base leading-none">�</span>
           </button>
           <button
             type="button"
@@ -77,7 +77,7 @@ const DemoCarousel = ({ images, alt }: Props) => {
             onClick={next}
             className="btn-magnetic absolute right-2 top-1/2 grid h-9 w-9 -translate-y-1/2 place-items-center rounded-full border hairline bg-white/85 text-zinc-900 opacity-0 backdrop-blur transition-opacity hover:bg-zinc-900 hover:text-white sm:right-3 dark:bg-zinc-950/80 dark:text-zinc-50 dark:hover:bg-zinc-50 dark:hover:text-zinc-900"
           >
-            <span aria-hidden className="text-base leading-none">›</span>
+            <span aria-hidden className="text-base leading-none">�</span>
           </button>
 
           <div className="absolute bottom-3 left-1/2 flex -translate-x-1/2 gap-1.5 rounded-full border hairline bg-white/70 px-2 py-1 backdrop-blur dark:bg-zinc-950/70">
@@ -100,7 +100,7 @@ const DemoCarousel = ({ images, alt }: Props) => {
       )}
 
       <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full border hairline bg-white/80 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-zinc-600 backdrop-blur dark:bg-zinc-950/70 dark:text-zinc-300">
-        <span aria-hidden>◐</span>
+        <span aria-hidden>?</span>
         <span>{alt}</span>
       </div>
     </div>
