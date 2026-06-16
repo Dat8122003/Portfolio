@@ -67,7 +67,7 @@ const About = () => {
                   if (r.pending) e.preventDefault();
                 }}
               >
-                {r.v}{r.download ? <span aria-hidden> ?</span> : null}
+                {r.v}{r.download ? <span aria-hidden> ↘</span> : null}
               </a>
             ) : (
               <span className="text-sm font-semibold text-zinc-900 sm:text-base dark:text-zinc-50">
