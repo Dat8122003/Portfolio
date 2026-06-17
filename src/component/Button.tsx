@@ -23,9 +23,15 @@ const variants: Record<Variant, string> = {
 };
 
 const disabled =
-  "border hairline bg-white text-zinc-400 dark:bg-zinc-950 dark:text-zinc-500 cursor-not-allowed";
+  "border hairline bg-white text-zinc-400 hover:bg-zinc-900 hover:text-white dark:bg-zinc-950 dark:text-zinc-500 dark:hover:bg-zinc-50 dark:hover:text-zinc-900 cursor-not-allowed";
 
-const Button = ({ href, children, variant = "ghost", fallback, className = "" }: Props) => {
+const Button = ({
+  href,
+  children,
+  variant = "ghost",
+  fallback,
+  className = "",
+}: Props) => {
   const isDisabled = !href;
   return (
     <a
