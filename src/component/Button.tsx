@@ -1,6 +1,6 @@
-﻿import type { ReactNode } from "react";
+import type { ReactNode } from "react";
 
-type Variant = "primary" | "solid" | "ghost";
+type Variant = "primary" | "solid" | "ghost" | "outline";
 
 type Props = {
   href?: string;
@@ -20,6 +20,8 @@ const variants: Record<Variant, string> = {
     "bg-zinc-900 text-white hover:bg-zinc-700 dark:bg-zinc-50 dark:text-zinc-900 dark:hover:bg-white",
   ghost:
     "border hairline bg-white text-zinc-900 hover:border-zinc-900 hover:bg-zinc-900 hover:text-white dark:bg-zinc-950 dark:text-zinc-50 dark:hover:border-zinc-50 dark:hover:bg-zinc-50 dark:hover:text-zinc-900",
+  outline:
+    "border hairline bg-white text-zinc-900 hover:border-zinc-900 hover:bg-white hover:text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50 dark:hover:border-zinc-50 dark:hover:bg-zinc-950 dark:hover:text-zinc-50",
 };
 
 const disabled =

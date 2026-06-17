@@ -74,7 +74,9 @@ const ProjectText = ({ p, t }: { p: Project; t: Dict }) => {
         <Button href={primaryHref} variant="primary" fallback={primaryLabel}>
           {primaryLabel}
         </Button>
-        <Button href={codeHref}>{t.code}</Button>
+        <Button href={codeHref} variant="outline">
+          {t.code}
+        </Button>
       </div>
     </div>
   );
@@ -106,7 +108,10 @@ const ProjectCard = ({ p, t }: { p: Project; t: Dict }) => {
 const Projects = () => {
   const { t } = useTheme();
   return (
-    <section id="projects" className="flex min-h-[100svh] items-start pt-16 sm:pt-20">
+    <section
+      id="projects"
+      className="flex min-h-[100svh] items-start pt-16 sm:pt-20"
+    >
       <div className="mx-auto w-full max-w-6xl px-4 pb-10 sm:px-6 md:pb-12">
         <Reveal>
           <h2 className="text-3xl font-bold tracking-tight text-zinc-900 sm:text-4xl md:text-5xl lg:text-6xl dark:text-zinc-50">
